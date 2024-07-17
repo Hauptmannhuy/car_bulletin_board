@@ -1,16 +1,18 @@
 
 class Api::AnnouncementsController < Api::ApplicationController
+  before_action :authenticate_api_user!, only: [:create]
   def index
     if params.include?(:status)
-      @announcments = Announcment.where(status: params[:status])
+      @announcments = Announcement.where(status: params[:status])
     else
-      @announcments = Announcment.all
+      @announcments = Announcement.all
     end
      render json: @announcments
   end
 
   def create
-    @announcment = Announcment.create!(permitted_params)
+    @user = current_api_user
+    @announcment = @user.announcements.create!(permitted_params)
     render json: @announcment
   end
 

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  binding.pry
+  include DeviseTokenAuth::Concerns::SetUserByToken
+
   protect_from_forgery with: :exception, if: :verify_api
 
   def verify_api

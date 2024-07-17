@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 DeviseTokenAuth.setup do |config|
+
+
   # By default the authorization headers will change after each request. The
   # client is responsible for keeping track of the changing tokens. Change
   # this to false to prevent the Authorization header from changing after
@@ -63,4 +65,6 @@ DeviseTokenAuth.setup do |config|
   # devise confirmable module. If you want to use devise confirmable module and
   # send email, set it to true. (This is a setting for compatibility)
   # config.send_confirmation_email = true
+  config.change_headers_on_each_request = false
+
 end

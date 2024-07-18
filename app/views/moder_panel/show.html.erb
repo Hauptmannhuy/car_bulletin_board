@@ -1,0 +1,17 @@
+<% @announcements.each do |announcement|%>
+  <%ann_attr = announcement.attributes%>
+  <ul>
+    
+      <% ann_attr.keys.each do |key|%>
+        <li><%= "#{key}: #{ann_attr[key]}"%></li>
+      <%end%>
+  </ul>
+  <%= form_with model: [:moder_panel, announcement] do |f|%>
+    <%=  hidden_field_tag 'status', 'approve' %>
+    <%= f.submit 'Approve'%>
+  <%end%> 
+  <%= form_with model: [:moder_panel, announcement] do |f|%>
+    <%=  hidden_field_tag 'status', 'reject' %>
+    <%= f.submit 'Reject'%>
+  <%end%>
+<%end%>

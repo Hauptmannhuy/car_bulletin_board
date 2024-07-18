@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: {
     registrations: 'admins/registrations'
   }
-
+  resource :moder_panel, only: [:show], controller: 'moder_panel' do
+  resources :announcements,only: [:update]
+  end
   namespace :api do
     mount_devise_token_auth_for 'User', at: 'auth'
 

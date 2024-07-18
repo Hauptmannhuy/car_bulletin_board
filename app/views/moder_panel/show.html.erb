@@ -1,17 +1,21 @@
-<% @announcements.each do |announcement|%>
+<% @announcements.each_with_index do |announcement,i|%>
   <%ann_attr = announcement.attributes%>
   <ul>
     
       <% ann_attr.keys.each do |key|%>
+      <% next if ['created_at','updated_at','user_id','id'].include?(key)%>
         <li><%= "#{key}: #{ann_attr[key]}"%></li>
       <%end%>
   </ul>
-  <%= form_with model: [:moder_panel, announcement] do |f|%>
-    <%=  hidden_field_tag 'status', 'approve' %>
-    <%= f.submit 'Approve'%>
-  <%end%> 
-  <%= form_with model: [:moder_panel, announcement] do |f|%>
-    <%=  hidden_field_tag 'status', 'reject' %>
-    <%= f.submit 'Reject'%>
-  <%end%>
+  <div id="button-panel-<%=i%>">
+    
+    <%= form_with model: [:moder_panel, announcement], data: {controller: 'button'} do |f|%>
+      <%=  hidden_field_tag 'status', 'approve' %>
+      <%= f.submit 'Approve',id: "btn-approve-#{i}", data:{action: "click->button#disable"}%>
+    <%end%>
+    <%= form_with model: [:moder_panel, announcement], data: {controller: 'button'} do |f|%>
+      <%=  hidden_field_tag 'status', 'reject' %>
+      <%= f.submit 'Reject', id: "btn-reject-#{i}", data:{action: "click->button#disable"}%>
+    <%end%>
+  </div>
 <%end%>
